@@ -137,21 +137,4 @@ public class UsuarioRepoImpl implements Repositorio <Usuario>{
         // devolvemos el objeto local con todas las propiedades asignadas con los valores de los campos
         return u;
     }
-    /*
-    private static Usuario getUsuario(ResultSet rs) throws SQLException {
-        Usuario p = new Usuario();
-
-        p.setId(rs.getLong("id"));
-        p.setUsuario(rs.getString("usuario"));
-        p.setClave(rs.getString("clave"));
-        p.setNombre(rs.getString("nombre"));
-        p.setApellidos(rs.getString("apellidos"));
-        p.setEmilio(rs.getString("emilio"));
-        p.setTlf(rs.getString("tlf"));
-        p.setNacimiento(rs.getDate("nacimiento"));
-        p.setTlf(rs.getString("avatar"));
-        return p;
-    }
-
-     */
 }
