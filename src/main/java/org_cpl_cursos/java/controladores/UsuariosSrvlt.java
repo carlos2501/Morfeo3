@@ -12,7 +12,6 @@ import org_cpl_cursos.java.servicios.UsuarioSrvcImpl;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
-import java.util.Optional;
 
 @WebServlet("/listausus")
 public class UsuariosSrvlt extends HttpServlet {
@@ -28,7 +27,7 @@ public class UsuariosSrvlt extends HttpServlet {
         Optional<Usuario> usu = auth.getUsuario(req);
     */
         req.setAttribute("usuarios", usuarios);
-        System.out.println(usuarios);
+        //System.out.println(usuarios);
         //req.setAttribute("usuario", usu.get().getNombre());
         getServletContext().getRequestDispatcher("/listaUsuarios.jsp").forward(req, resp);
     }

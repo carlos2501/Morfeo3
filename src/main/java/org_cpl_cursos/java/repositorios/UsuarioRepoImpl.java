@@ -1,14 +1,13 @@
 package org_cpl_cursos.java.repositorios;
 
 import org_cpl_cursos.java.modelos.Usuario;
-import org_cpl_cursos.java.utilidades.ConexionBD;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioRepoImpl implements Repositorio <Usuario>{
-    private Connection conn;
+    private final Connection conn;
 
     public UsuarioRepoImpl(Connection conexion) {
         this.conn = conexion;
@@ -21,7 +20,7 @@ public class UsuarioRepoImpl implements Repositorio <Usuario>{
         try(Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios u ;")) {
             while (rs.next()) {
-                Usuario u = getUsuario(rs);
+                Usuario u = cargaUsuario(rs);
                 usuarios.add(u);
             }
         } catch (SQLException e) {
@@ -73,12 +72,12 @@ public class UsuarioRepoImpl implements Repositorio <Usuario>{
         };
         ...Esta es la versión corta (operador ternario)
          */
-        Boolean id = porId(usu.getId()) != null ? true : false;
+        boolean id = porId(usu.getId()) != null;
 
         /* Compruebo si el usuario pasado como argumento de la llamada existe */
         if(id) {
             // indica que elusuario pasado EXISTE y por lo tanto hay que modificarlo
-            qry ="UPDATE Usuarios SET usuario=?, clave=?, nombre=?, apellidos=?, emilio=?, tlf=?,nacimiento=?, avatar=? WHERE id = ?";
+            qry ="UPDATE usuarios SET usuario=?, clave=?, nombre=?, apellidos=?, emilio=?, tlf=?,nacimiento=?, avatar=? WHERE id = ?";
         } else {
             // indica que el usuario NO EXISTE (y, porlo tanto hay que añadirlo
             qry ="INSERT usuarios VALUES(?,?,?,?,?,?,?,?,?)";
@@ -124,7 +123,8 @@ public class UsuarioRepoImpl implements Repositorio <Usuario>{
         // creamos una variable local del tipo que hay que devoolver
         Usuario u = new Usuario();
 
-        // del Resulset -rs- obtenemso los valores de cada campo y los asiganamos a cada propiedad del objeto
+        // del Resulset -rs- obtenemos los valores de cada campo y los asiganamos a cada propiedad del objeto
+        u.setId(rs.getLong("id"));
         u.setUsuario(rs.getString("usuario"));
         u.setClave(rs.getString("clave"));
         u.setNombre(rs.getString("nombre"));
@@ -137,6 +137,7 @@ public class UsuarioRepoImpl implements Repositorio <Usuario>{
         // devolvemos el objeto local con todas las propiedades asignadas con los valores de los campos
         return u;
     }
+    /*
     private static Usuario getUsuario(ResultSet rs) throws SQLException {
         Usuario p = new Usuario();
 
@@ -151,4 +152,6 @@ public class UsuarioRepoImpl implements Repositorio <Usuario>{
         p.setTlf(rs.getString("avatar"));
         return p;
     }
+
+     */
 }
