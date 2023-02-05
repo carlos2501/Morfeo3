@@ -1,10 +1,15 @@
-<%--
+<%@ page import="org_cpl_cursos.java.modelos.Categoria" %>
+<%@ page import="java.util.List" %><%--
   Created by CPL.
   User: Carlos
   Date: 05/02/2023
   Time: 12:28
   To change this template use File | Settings | File Templates | JSP Bootstrap 5.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Categoria> categs = (List<Categoria>)request.getAttribute("categorias");
+%>
 <!doctype html>
 <html lang="es_ES">
 <head>
@@ -38,6 +43,11 @@
                     <label for="fecha">Fecha</label>
                     <input type="date" class="form-control" id="fecha" name="fecha">
                 </div>
+                <select name="categoria" id="categoria" class="form-select">
+                    <%for(Categoria c: categs) {%>>
+                    <option value="<%=c.getId()%>"><%=c.getCategoria()%></option>
+                    <%}%>
+                </select>
             </form>
         </div>
     </div>

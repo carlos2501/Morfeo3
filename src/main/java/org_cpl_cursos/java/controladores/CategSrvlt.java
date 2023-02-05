@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-@WebServlet("/listacategorias")
+@WebServlet("/categorias/lista")
 public class CategSrvlt extends HttpServlet {
 
     @Override
