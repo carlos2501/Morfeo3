@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org_cpl_cursos.java.modelos.Usuario;
+import org_cpl_cursos.java.servicios.SuenoSrvc;
+import org_cpl_cursos.java.servicios.SuenoSrvcImpl;
 import org_cpl_cursos.java.servicios.UsuarioSrvc;
 import org_cpl_cursos.java.servicios.UsuarioSrvcImpl;
 
@@ -13,7 +15,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-@WebServlet("/listausus")
+@WebServlet("/usuarios/lista")
 public class UsuariosSrvlt extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -32,3 +34,5 @@ public class UsuariosSrvlt extends HttpServlet {
         getServletContext().getRequestDispatcher("/listaUsuarios.jsp").forward(req, resp);
     }
 }
+
+

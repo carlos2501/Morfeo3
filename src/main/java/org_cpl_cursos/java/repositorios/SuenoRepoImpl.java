@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuenoRepoImpl implements Repositorio<Sueno>{
+public class SuenoRepoImpl implements SuenoRepo{
     private final Connection conn;
 
     public SuenoRepoImpl(Connection conn) {
@@ -82,7 +82,7 @@ public class SuenoRepoImpl implements Repositorio<Sueno>{
     public List<Sueno> porSonador(Long idProp){
         List<Sueno> suenos = new ArrayList<>();
 
-        try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM suenos u WHERE idPropietaio = ? ;")) {
+        try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM suenos u WHERE idPropietario = ? ;")) {
             stmt.setLong(1, idProp);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

@@ -1,6 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Optional" %>
-<%@ page import="org_cpl_cursos.java.modelos.Usuario" %>
+<%@ page import="org_cpl_cursos.java.modelos.Sueno" %>
 <%--
   Created by CPL.
   User: Carlos
@@ -10,7 +9,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> usus = (List<Usuario>)request.getAttribute("usuarios");
+    List<Sueno> suenos = (List<Sueno>)request.getAttribute("sueños");
+    Long id = (Long) request.getAttribute("soñador");
 %>
 <!doctype html>
 <html lang="es_ES">
@@ -28,28 +28,24 @@
     <title>Lista de Usuarios</title>
   </head>
   <body>
-    <h1> Listado de Usuarios</h1>
+    <h1> Listado de Sueños de <%=id%></h1>
     <div>Hola, bienvenido</div>
     <p>
-        <a href="<%=request.getContextPath()%>/usuarios/nuevo">Nuevo Usuario</a>
+        <a href="<%=request.getContextPath()%>/suenos/nuevo?<%=id%>">Nuevo sueño</a>
     </p>
 
     <table>
         <tr>
             <td>id</td>
             <td>Nombre</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>Soñador</td>
+
         </tr>
-        <%for(Usuario u: usus) {%>
+        <%for(Sueno s: suenos) {%>
         <tr>
-            <td><%=u.getId()%></td>
-            <td><%=u.getNombre()%></td>
-            <td><a href="<%=request.getContextPath()%>/usuarios/edita?id=<%=u.getId()%>">Editar</a></td>
-            <td><a onclick="return confirm('¿Esta seguro de que queire eliminar este usuario?');"
-                    href="<%=request.getContextPath()%>/usuarios/borrar?id=<%=u.getId()%>">Borrar</a></td>
-            <td><a href="<%=request.getContextPath()%>/usuarios/suenos?id=<%=u.getId()%>">Sueños</a></td>
+            <td><%=s.getId()%></td>
+            <td><%=s.getTitulo()%></td>
+            <td><%=s.getIdPropietario()%></td>
         </tr>
         <%}%>
     </table>
