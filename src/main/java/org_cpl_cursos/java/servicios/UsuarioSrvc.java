@@ -11,4 +11,5 @@ public interface UsuarioSrvc {
     Optional<Usuario> porId(Long id);
     void guardar(Usuario prod);
     void borrar(Long id);
+    Optional<Usuario> login(String username, String password);
 }

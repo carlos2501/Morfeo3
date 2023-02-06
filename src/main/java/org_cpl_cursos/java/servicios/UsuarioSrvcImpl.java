@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UsuarioSrvcImpl implements UsuarioSrvc{
-    private Repositorio<Usuario> repoUsu;
+    private UsuarioRepo repoUsu;
 
     public UsuarioSrvcImpl(Connection conn) {
         this.repoUsu = new UsuarioRepoImpl(conn);
@@ -36,5 +36,14 @@ public class UsuarioSrvcImpl implements UsuarioSrvc{
     @Override
     public void borrar(Long id) {
 
+    }
+
+    @Override
+    public Optional<Usuario> login(String username, String password) {
+        try {
+            return Optional.ofNullable(repoUsu.porNombreUsuario(username)).filter(u -> u.getClave().equals(password));
+        } catch (SQLException e) {
+            throw new ServicioJdbcException(e.getMessage(),e.getCause());
+        }
     }
 }

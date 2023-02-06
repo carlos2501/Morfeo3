@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioRepoImpl implements Repositorio <Usuario>{
+public class UsuarioRepoImpl implements UsuarioRepo{
     private final Connection conn;
 
     public UsuarioRepoImpl(Connection conexion) {
@@ -119,11 +119,25 @@ public class UsuarioRepoImpl implements Repositorio <Usuario>{
 
     }
 
+    @Override
+    public Usuario porNombreUsuario(String nombre) throws SQLException {
+        Usuario usu = null;
+        try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM usuarios WHERE usuario=?")) {
+            stmt.setString(1,nombre);
+            try(ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    usu = cargaUsuario(rs);
+                }
+            }
+        }
+        return usu;
+    }
+
     private Usuario cargaUsuario(ResultSet rs) throws SQLException {
-        // creamos una variable local del tipo que hay que devoolver
+        // creamos una variable local del tipo que hay que devolver
         Usuario u = new Usuario();
 
-        // del Resulset -rs- obtenemos los valores de cada campo y los asiganamos a cada propiedad del objeto
+        // del Resulset -rs- obtenemos los valores de cada campo y los asignamos a cada propiedad del objeto
         u.setId(rs.getLong("id"));
         u.setUsuario(rs.getString("usuario"));
         u.setClave(rs.getString("clave"));
@@ -137,4 +151,6 @@ public class UsuarioRepoImpl implements Repositorio <Usuario>{
         // devolvemos el objeto local con todas las propiedades asignadas con los valores de los campos
         return u;
     }
+
+
 }
