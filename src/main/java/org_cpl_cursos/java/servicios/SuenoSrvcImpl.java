@@ -5,6 +5,7 @@ import org_cpl_cursos.java.repositorios.SuenoRepo;
 import org_cpl_cursos.java.repositorios.SuenoRepoImpl;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,5 +44,10 @@ public class SuenoSrvcImpl implements SuenoSrvc{
     @Override
     public void borrar(Long id) {
 
+    }
+
+    @Override
+    public List<Sueno> ultimosSuenos(int cantidad) throws SQLException {
+        return repoSueno.ultimosSuenos(cantidad);
     }
 }

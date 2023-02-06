@@ -1,5 +1,6 @@
 package org_cpl_cursos.java.repositorios;
 
+import com.mysql.cj.protocol.Resultset;
 import org_cpl_cursos.java.modelos.Sueno;
 import org_cpl_cursos.java.modelos.Usuario;
 
@@ -95,6 +96,21 @@ public class SuenoRepoImpl implements SuenoRepo{
         return suenos;
     }
 
+    @Override
+    public List<Sueno> ultimosSuenos(int cantidad) throws SQLException {
+        List<Sueno> lista = new ArrayList<>();
+        try(Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM suenos ORDER BY fecha DESC")) {
+            int cont = 0;
+            while (rs.next() && cont <= cantidad) {
+                Sueno s = cargaSueno((rs));
+                lista.add(s);
+                cont++;
+            }
+        }
+        return lista;
+    }
+
 
     private Sueno cargaSueno(ResultSet rs) throws SQLException {
         Sueno s = new Sueno();
@@ -105,7 +121,6 @@ public class SuenoRepoImpl implements SuenoRepo{
         s.setTitulo(rs.getString("titulo"));
         s.setFecha(rs.getDate("fecha").toLocalDate());
         s.setIdPropietario(rs.getLong("idPropietario"));
-
         return s;
     }
 }
